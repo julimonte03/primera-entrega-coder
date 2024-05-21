@@ -2,7 +2,6 @@ import express from 'express';
 import cartRouter from './routes/cart.router.js'
 import productsRouter from './routes/products.router.js';
 import morgan from 'morgan';
-import { __dirname } from './path.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
 const app = express()

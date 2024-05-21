@@ -1,4 +1,4 @@
-import { __dirname } from "../path.js";
+import { __dirname } from "..//utils/path.js";
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 
@@ -54,53 +54,39 @@ export default class CartManager {
     }
   }
 
-  async saveProductToCart(cid,pid){
+  async saveProductToCart(cid, pid) {
     try {
-
-      product = await productManager.getProductById(pid);
-
-      if(!product) throw new Error('product not found!');
-
-      carts = this.getAllCarts();
-
-      cart = carts.find( id => id === cid);
-
-      if(!cart) throw new Error('cart not found!');
-
-      productFound = cart.products.find(prod => prod.product === pid);
-      
-      if(!productFound){
-
-        addProd = {
-          product : pid, 
-          quantity : 1
+      const product = await productManager.getProductById(pid);
+      if (!product) throw new Error('Product not found!');
+  
+      const carts = await this.getAllCarts();
+      const cartExist = await this.getCartById(cid);
+      if (!cartExist) throw new Error('Cart not found!');
+  
+      const productFound = cartExist.products.find(prod => prod.product === pid);
+  
+      if (!productFound) {
+        const addProd = {
+          product: pid,
+          quantity: 1
         };
-
-        cartFound.products.push(addProd);
-
-      }else{
-
-        for (const product of cart) {
-
-          if(product.product === pid) product.quantity =+ 1;
-          
-        }
-
+        cartExist.products.push(addProd);
+      } else {
+        productFound.quantity += 1;
       }
-
-      const updatedCarts = carts.map(c => {
-        if(cart.id === cid){
-          c = cart;
-          return carts
-        }else{
-         return carts 
+  
+      const updatedCarts = carts.map(cart => {
+        if (cart.id === cid) {
+          return cartExist;
+        } else {
+          return cart;
         }
-      })
-
-      await fs.promises.writeFile(this.path,JSON.stringify(updatedCarts));
-
+      });
+  
+      await fs.promises.writeFile(this.path, JSON.stringify(updatedCarts));
+      return cartExist;
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  }  
 }

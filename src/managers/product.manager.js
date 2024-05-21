@@ -1,7 +1,7 @@
 import fs from "fs";
 import { v4 as uuidv4 } from "uuid";
 
-export default class ProductManager {
+class ProductManager {
   constructor(path) {
     this.path = path;
   }
@@ -13,20 +13,16 @@ export default class ProductManager {
         let productList = JSON.parse(products);
         
         if (limit) {
-
-          productList = productList.splice(0, limit);
-        
+          productList = productList.slice(0, limit);
         }
   
         return productList;
-      } else {
-        return [];
-      }
+      } else return [];
     } catch (error) {
       console.log(error);
+      return [];
     }
   }
-  
 
   async createProduct(obj) {
     try {
@@ -91,3 +87,5 @@ export default class ProductManager {
     }
   }
 }
+
+export default ProductManager;

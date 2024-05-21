@@ -1,10 +1,10 @@
 import { Router } from "express";
 const router = Router();
 
-import { __dirname } from "../path.js";
+import { __dirname } from "../utils/path.js";
 
 import ProductManager from "../managers/product.manager.js";
-const productManager = new ProductManager(`${__dirname}/db/products.json`);
+const productManager = new ProductManager(`${__dirname}/dataBase/products.json`);
 
 import {productValidator} from '../middlewares/productValidator.js'
 
@@ -24,18 +24,20 @@ router.get('/', async(req, res) => {
 });
 
 router.get("/:pid", async (req, res) => {
-    try {
+  try {
+    const { pid } = req.params;
+    const product = await productManager.getProductById(pid);
 
-      const { pid } = req.params;
-      const product = await productManager.getProductById(pid);
-
-      if (!product) res.status(404).json({ msg: "product not found" });
-
-      else res.status(200).json(product);
-    } catch (error) {
-      res.status(500).json({ msg: error.message });
+    if (!product) {
+      return res.status(404).json({ msg: "Product not found" });
     }
-  });
+
+    res.status(200).json(product);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+});
+
 
 
 router.post('/', productValidator, async (req, res)=>{
