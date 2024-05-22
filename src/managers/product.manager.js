@@ -33,7 +33,7 @@ class ProductManager {
       };
       const products = await this.getProducts();
       products.push(product);
-      await fs.promises.writeFile(this.path, JSON.stringify(products));
+      await fs.promises.writeFile(this.path, JSON.stringify(products, null, 2));
       return product;
     } catch (error) {
       console.log(error);
@@ -51,15 +51,14 @@ class ProductManager {
     }
   }
 
-  async updateProduct(obj, id) {
+  async updateProduct(id, obj) { // Note: I switched the order of parameters for clarity
     try {
       const products = await this.getProducts();
       let productExist = await this.getProductById(id);
       if (!productExist) return null;
       productExist = { ...productExist, ...obj };
-      const newArray = products.filter((u) => u.id !== id);
-      newArray.push(productExist)
-      await fs.promises.writeFile(this.path, JSON.stringify(newArray));
+      const newArray = products.map((u) => u.id === id ? productExist : u);
+      await fs.promises.writeFile(this.path, JSON.stringify(newArray, null, 2));
       return productExist;
     } catch (error) {
       console.log(error);
@@ -67,15 +66,19 @@ class ProductManager {
   }
 
   async deleteProduct(id) {
-    const products = await this.getProducts();
-    if (products.length > 0) {
-      const productExist = await this.getProductById(id);
-      if (productExist) {
-        const newArray = products.filter((u) => u.id !== id);
-        await fs.promises.writeFile(this.path, JSON.stringify(newArray));
-        return productExist
-      } 
-    } else return null
+    try {
+      const products = await this.getProducts();
+      if (products.length > 0) {
+        const productExist = await this.getProductById(id);
+        if (productExist) {
+          const newArray = products.filter((u) => u.id !== id);
+          await fs.promises.writeFile(this.path, JSON.stringify(newArray, null, 2));
+          return productExist;
+        } 
+      } else return null;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async deleteFile() {

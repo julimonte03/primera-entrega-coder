@@ -1,0 +1,15 @@
+[
+  {
+    "id": "d21d5edc-630d-41a3-80e6-db57996a2e1a",
+    "status": true,
+    "title": "EJEMPLO BICICLETA5",
+    "description": "...",
+    "code": "PRUEBA05",
+    "price": 1,
+    "stock": 15,
+    "category": "Ruta",
+    "thumbnail": [
+      "https://newsport.vtexassets.com/arquivos/ids/17567638-800-auto?v=63835"
+    ]
+  }
+]

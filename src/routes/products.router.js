@@ -1,22 +1,18 @@
 import { Router } from "express";
-const router = Router();
-
-import { __dirname } from "../utils/path.js";
-
 import ProductManager from "../managers/product.manager.js";
-const productManager = new ProductManager(`${__dirname}/dataBase/products.json`);
+import { __dirname } from "../utils/path.js";
+import { productValidator } from '../middlewares/productValidator.js';
 
-import {productValidator} from '../middlewares/productValidator.js'
+const router = Router();
+const productManager = new ProductManager(`${__dirname}/../dataBase/products.json`);
 
-router.get('/', async(req, res) => {
+router.get('/', async (req, res) => {
   try {
-      const { limit } = req.query;
-      console.log(limit);
-      const products = await productManager.getProducts(limit);
-      res.status(200).json(products);
+    const { limit } = req.query;
+    const products = await productManager.getProducts(limit ? parseInt(limit) : undefined);
+    res.status(200).json(products);
   } catch (error) {
-      res.status(404).json({ message: error.message });
-      console.log(error);
+    res.status(404).json({ message: error.message });
   }
 });
 
@@ -24,69 +20,54 @@ router.get("/:pid", async (req, res) => {
   try {
     const { pid } = req.params;
     const product = await productManager.getProductById(pid);
-
     if (!product) {
       return res.status(404).json({ msg: "Product not found" });
     }
-
     res.status(200).json(product);
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
 });
 
-
-
-router.post('/', productValidator, async (req, res)=>{
-    try {
-        const product = req.body;
-        const newProduct = await productManager.createProduct(product);
-        res.json(newProduct);
-    } catch (error) {
-        res.status(404).json({ message: error.message });
-    }
+router.post('/', productValidator, async (req, res) => {
+  try {
+    const product = req.body;
+    const newProduct = await productManager.createProduct(product);
+    res.status(201).json(newProduct);
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
 });
 
 router.put("/:pid", async (req, res) => {
-    try {
-      const { pid } = req.params;
-      const prodUpd = await productManager.updateProduct(req.body, pid);
-      if (!prodUpd) res.status(404).json({ msg: "Error updating prod" });
-      res.status(200).json(prodUpd);
-    } catch (error) {
-      res.status(500).json({ msg: error.message });
-    }
-  });
+  try {
+    const { pid } = req.params;
+    const updatedProduct = await productManager.updateProduct(pid, req.body);
+    if (!updatedProduct) return res.status(404).json({ msg: "Error updating product" });
+    res.status(200).json(updatedProduct);
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+});
 
 router.delete("/:pid", async (req, res) => {
-    try {
-      const { pid } = req.params;
-      const delProd = await productManager.deleteProduct(pid);
-      if(!delProd) res.status(404).json({ msg: "Error delete product" });
-      else res.status(200).json({msg : `product id: ${pid} deleted successfully`})
-    } catch (error) {
-      res.status(500).json({ msg: error.message });
-    }
-  });
+  try {
+    const { pid } = req.params;
+    const deletedProduct = await productManager.deleteProduct(pid);
+    if (!deletedProduct) return res.status(404).json({ msg: "Error deleting product" });
+    res.status(200).json({ msg: `Product id: ${pid} deleted successfully` });
+  } catch (error) {
+    res.status(500).json({ msg: error.message });
+  }
+});
 
-router.delete('/', async(req, res)=>{
-    try {
-        await productManager.deleteFile();
-        res.send('products deleted successfully')
-    } catch (error) {
-        res.status(404).json({ message: error.message });
-
-    }
+router.delete('/', async (req, res) => {
+  try {
+    await productManager.deleteFile();
+    res.send('Products deleted successfully');
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
 });
 
 export default router;
-
-
-
-
-
-
-
-
-
-
