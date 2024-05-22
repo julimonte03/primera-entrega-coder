@@ -9,18 +9,15 @@ const productManager = new ProductManager(`${__dirname}/dataBase/products.json`)
 import {productValidator} from '../middlewares/productValidator.js'
 
 router.get('/', async(req, res) => {
-    try {
-      
-        const { limit } = req.query;
-
-        const products = await productManager.getProducts(limit);
-
-        res.status(200).json(products);
-
-    } catch (error) {
-        res.status(404).json({ message: error.message });
-        console.log(error);
-    }
+  try {
+      const { limit } = req.query;
+      console.log(limit);
+      const products = await productManager.getProducts(limit);
+      res.status(200).json(products);
+  } catch (error) {
+      res.status(404).json({ message: error.message });
+      console.log(error);
+  }
 });
 
 router.get("/:pid", async (req, res) => {
