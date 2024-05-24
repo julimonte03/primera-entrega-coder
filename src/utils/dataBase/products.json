@@ -11,5 +11,44 @@
     "thumbnail": [
       "https://newsport.vtexassets.com/arquivos/ids/17567638-800-auto?v=63835"
     ]
+  },
+  {
+    "id": "6bb943ca-6435-4361-aa5b-f4bce6b7f164",
+    "status": true,
+    "title": "EJEMPLO BICICLETA5",
+    "description": "...",
+    "code": "PRUEBA05",
+    "price": 1198299,
+    "stock": 15,
+    "category": "Ruta",
+    "thumbnail": [
+      "https://newsport.vtexassets.com/arquivos/ids/17567638-800-auto?v=63835"
+    ]
+  },
+  {
+    "id": "437281c7-5cf6-412e-897e-a8ab83d31131",
+    "status": true,
+    "title": "EJEMPLO BICICLETA5",
+    "description": "...",
+    "code": "PRUEBA05",
+    "price": 1198299,
+    "stock": 15,
+    "category": "Ruta",
+    "thumbnail": [
+      "https://newsport.vtexassets.com/arquivos/ids/17567638-800-auto?v=63835"
+    ]
+  },
+  {
+    "id": "b28c6112-c452-45bc-9b27-b0f95e4f6a72",
+    "status": true,
+    "title": "raviol",
+    "description": "...",
+    "code": "PRUEBA05",
+    "price": 1198299,
+    "stock": 15,
+    "category": "Ruta",
+    "thumbnail": [
+      "https://newsport.vtexassets.com/arquivos/ids/17567638-800-auto?v=63835"
+    ]
   }
 ]
