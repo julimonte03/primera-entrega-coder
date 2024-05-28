@@ -1,11 +1,20 @@
 export const productValidator = (req, res, next) => {
-  !req.body.title ||
-  !req.body.description ||
-  !req.body.code ||
-  !req.body.price ||
-  !req.body.stock ||
-  !req.body.category
-    ? res.status(404).json({ msg: "Invalid product" })
-    : next();
-};
+    const { title, description, code, price, stock, status, category, thumbnail } = req.body;
+  
+    // console.log(req.body); 
+  
+    if (
+      !title || 
+      !description || 
+      !code || 
+      typeof price !== 'number' || 
+      typeof stock !== 'number' || 
+      typeof status !== 'boolean' || 
+      !category || 
+      !Array.isArray(thumbnail)
+    ) {
+      return res.status(400).json({ msg: "Invalid body" });
+    }
+    next();
+  };
   

@@ -21,5 +21,16 @@
     "code": "sd",
     "price": 333,
     "stock": 333
+  },
+  {
+    "id": "ff819160-b422-4ac7-ae20-c9b1442170de",
+    "status": true,
+    "title": "sd",
+    "description": "dssd",
+    "category": "ds",
+    "code": "sdds2121",
+    "price": 2121,
+    "stock": 2121,
+    "thumbnail": "C:\\fakepath\\Screenshot 2024-05-15 165928.png"
   }
 ]

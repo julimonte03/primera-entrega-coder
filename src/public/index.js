@@ -36,7 +36,8 @@ document.getElementById('form').addEventListener('submit', (event) => {
         category: document.getElementById('category').value,
         code: document.getElementById('code').value,
         price: parseFloat(document.getElementById('price').value),
-        stock: parseInt(document.getElementById('stock').value, 10)
+        stock: parseInt(document.getElementById('stock').value, 10),
+        thumbnail: document.getElementById('thumbnail').value
     }
 
     socket.emit('newProduct', newProduct);
