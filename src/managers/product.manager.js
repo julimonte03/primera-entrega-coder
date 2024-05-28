@@ -51,7 +51,7 @@ class ProductManager {
     }
   }
 
-  async updateProduct(id, obj) { // Note: I switched the order of parameters for clarity
+  async updateProduct(id, obj) { 
     try {
       const products = await this.getProducts();
       let productExist = await this.getProductById(id);

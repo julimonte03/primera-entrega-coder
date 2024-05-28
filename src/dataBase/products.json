@@ -50,5 +50,15 @@
     "thumbnail": [
       "https://newsport.vtexassets.com/arquivos/ids/17567638-800-auto?v=63835"
     ]
+  },
+  {
+    "id": "42bdb859-4293-41e8-8db1-72921d01b8c6",
+    "status": true,
+    "title": "sd",
+    "description": "sdsd",
+    "category": "sd",
+    "code": "sd",
+    "price": 333,
+    "stock": 333
   }
 ]
